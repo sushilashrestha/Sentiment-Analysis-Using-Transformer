@@ -1,6 +1,6 @@
-DATASET_DIR: "C:\\Users\\admin\\Desktop\\reviews\\translated"
-TRAIN_JSON_PATH: ""
-TEST_JSON_PATH: ""
+DATASET_DIR: "C:\\Users\\admin\\Documents\\CODES\\translator"
+TRAIN_JSON_PATH: "C:\\Users\\admin\\Documents\\CODES\\translator\\train.json"
+TEST_JSON_PATH: "C:\\Users\\admin\\Documents\\CODES\\translator\\test.json"
 BATCH_SIZE: 4
 OUTPUT_SIZE: 2
 MAX_SEQ_LEN: 512

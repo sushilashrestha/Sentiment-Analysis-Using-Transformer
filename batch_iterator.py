@@ -35,6 +35,7 @@ class BatchIterator():
         self.test_x = test_x
         self.test_y = test_y
         self.tokenize = tokenize
+        self.PAD = 0
 
     def calculate_batch_per_epoch(self, batch_size):
 

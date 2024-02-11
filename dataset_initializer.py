@@ -69,7 +69,7 @@ class DataInitializer():
 
         # Download the Dataset tar file using wget and place it in the created dataset directory
         print("Checking if the Dataset File Already Exist...")
-        if not self.check_if_file_exists(self.dataset_dir+'/aclImdb_v1.tar.gz'):
+        if not self.check_if_file_exists(self.dataset_dir+'/dataset.tar.gz'):
             print('Start of dataset file download...')
             wget.download(url=self.data_source_url, out=self.dataset_dir)
             print('Download complete!')
@@ -79,13 +79,13 @@ class DataInitializer():
 
         # Extract All Contents of the IMDB Dataset file into Dataset Directory
         print("Checking whether the Dataset File Already Extracted or Not...")
-        if not self.check_if_dir_exists(self.dataset_dir+'/aclImdb'):
+        if not self.check_if_dir_exists(self.dataset_dir+'/dataset'):
 
             print("Extracting the Dataset File as it's not Already Extracted...")
             start = time.time()
 
             # Open the tar archive for reading
-            with tarfile.open(self.dataset_dir+'/aclImdb_v1.tar.gz', 'r') as tar:
+            with tarfile.open(self.dataset_dir+'/dataset.tar.gz', 'r') as tar:
             # Extract all contents of the archive to the specified directory
                 tar.extractall(path=self.dataset_dir)
             print('Extracted Successfully!')
@@ -97,7 +97,7 @@ class DataInitializer():
         else:
             print('Data folder exists. Won\'t Extract again!')
 
-        return self.dataset_dir+'/aclImdb'
+        return self.dataset_dir+'/dataset'
 
     def check_if_file_exists(self, file):
 

@@ -6,12 +6,14 @@ import os
 import time
 import json
 import sentencepiece as spm
+from nepalitokenizers import WordPiece
+
 
 
 class DatasetPreparer():
 
-    def __init__(self, dataset_folder):
-
+    def __init__(self, dataset_folder, tokenizer: WordPiece):
+        self.tokenizer = tokenizer
         self.dataset_folder = dataset_folder
 
     """
@@ -54,26 +56,16 @@ class DatasetPreparer():
             Builds a vocabulary for encoding using SentencePiece.
     """
 
-
     def preprocess(self, review):
-
-        """
-        A Helper function to preprocesses a given review.
-
-        Args:
-            review (str): The input review text.
-
-        Returns:
-            str: The preprocessed review.
-        """
-
         # Remove HTML tags from the review.
         clean = re.compile('<.*?>')
         review_without_tag = re.sub(clean, '', review)
         # Convert the review to lowercase.
         review_lowercase = review_without_tag.lower()
-        # Tokenize the review and remove punctuation.
-        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_lowercase)]
+        # Tokenize the review using WordPiece tokenizer.
+        review_tokens = self.tokenizer.encode(review_lowercase).tokens
+        # Remove punctuation from the tokens.
+        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in review_tokens]
         # Filter of Empty Strings
         filtered = list(filter(None, review_without_punctuation))
         #Combine the processed words into a sentence.
@@ -93,7 +85,7 @@ class DatasetPreparer():
         """
 
         # Open the file as read only
-        file = open(filename, 'r')
+        file = open(filename, 'r', encoding = 'utf-8', errors ='replace')
         # Read all text
         text = file.read()
         # close the file
@@ -130,6 +122,7 @@ class DatasetPreparer():
 
                 for root, dirs, files in os.walk(data_folder):
                     for fname in files:
+                        print(fname)
 
                         if fname.endswith(".txt"):
 
@@ -303,14 +296,14 @@ class DatasetPreparer():
         """
 
         print(f"Writing All Cleaned data to {file_path} for training vocabulary using sentencepiece")
-        with open(file_path, 'w') as f:
+        with open(file_path, 'w', encoding='utf-8') as f:
             for sentence in sentences:
                 f.write(sentence + '\n')
         print("Done!")
         return file_path
 
 
-    def build_vocab(self, vocab_file_prefix='imdb_vocab', vocab_size=8000, model_type='bpe'):
+    def build_vocab(self, vocab_file_prefix='dataset_vocab', vocab_size=129, model_type='bpe'):
 
         """
         Builds a vocabulary using SentencePiece for encoding the reviews into numerical values.
@@ -327,23 +320,25 @@ class DatasetPreparer():
         dataset_parent_dir = os.path.dirname(self.dataset_folder)
 
         print("\nChecking whether the vocabulary file already exist...")
-        if not os.path.isfile(dataset_parent_dir+'/'+vocab_file_prefix+'.model'):
+        vocab_file_path = os.path.join(dataset_parent_dir, vocab_file_prefix + '.model')
+        if not os.path.isfile(vocab_file_path):
 
-            data_txt_path = self.write_to_file(dataset_parent_dir+'/imdb_cleaned.txt', self.all_pos+self.all_neg)
+            data_txt_path = self.write_to_file(os.path.join(dataset_parent_dir, 'dataset_cleaned.txt'), self.all_pos+self.all_neg)
 
-            os.chdir(dataset_parent_dir)
+            if not os.path.isfile(data_txt_path):
+                raise FileNotFoundError(f"Dataset file '{data_txt_path}' not found.")
 
             print("Creating Vocabulary using Sentencepiece as it doesn't already exist...")
             spm.SentencePieceTrainer.train(input=data_txt_path, model_prefix=vocab_file_prefix, vocab_size=vocab_size, model_type=model_type, pad_id=0, eos_id=1, unk_id=2, bos_id=-1, eos_piece='<EOS>', pad_piece='<PAD>', unk_piece='<UNK>')
             print("Vocabulary Created Sucessfully!")
 
-            return dataset_parent_dir+'/'+ vocab_file_prefix+'.model'
+            return vocab_file_path
 
         else:
 
             print("Vocabulary File Already Exist! Won't Train an other.")
 
-            return dataset_parent_dir+'/'+ vocab_file_prefix+'.model'
+            return vocab_file_path
         
 
         

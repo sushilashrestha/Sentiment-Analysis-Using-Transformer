@@ -11,10 +11,15 @@ import nltk
 from nltk.tokenize import word_tokenize
 import re
 import string
+import nltk
+nltk.download('punkt')
+from nepalitokenizers import WordPiece
+
+tokenizer = WordPiece()
 
 class Prepare_Train():
 
-   def __init__(self, dataset_dir, train_json_path, test_json_path, batch_size=4, output_size=2, 
+    def __init__(self, dataset_dir, train_json_path, test_json_path, batch_size=4, output_size=2, 
                  max_seq_len=512, d_model=512, pooling="max", num_heads=4, expansion_factor=2, 
                  num_blocks=2, activation="relu", dropout_size=0.1, model_save_path=None, 
                  criterator="cel", optimizer_type="adamw", num_epochs=5, learning_rate=1e-3, 
@@ -67,24 +72,24 @@ class Prepare_Train():
         self.weight_decay = weight_decay
         self.gamma = gamma
 
-        def initialize_the_dataset(self):
+    def initialize_the_dataset(self):
     
-            """Initialize the Dataset directory and prepare dataset folder."""
+        """Initialize the Dataset directory and prepare dataset folder."""
         
         initialize_dataset = DataInitializer(self.dataset_dir)
         self.dataset_folder = initialize_dataset.prepare_dataset_folder()
 
-        def prepare_the_dataset(self):
+    def prepare_the_dataset(self):
 
-            """Prepare the dataset for training and validation also build vocabulary to encode the input"""
+        """Prepare the dataset for training and validation also build vocabulary to encode the input"""
     
-        dataset_prep = DatasetPreparer(self.dataset_folder)
+        dataset_prep = DatasetPreparer(self.dataset_folder, tokenizer = tokenizer)
         self.train_x, self.train_y, self.test_x, self.test_y = dataset_prep.prepare_dataset(self.train_json_path, self.test_json_path, verbose=True)
         self.vocab_path =  dataset_prep.build_vocab()
 
-        def preprocess_the_dataset(self):
+    def preprocess_the_dataset(self):
 
-            """Preprocess the dataset by Filtering and Load the Vocabulary to use externaly."""
+        """Preprocess the dataset by Filtering and Load the Vocabulary to use externaly."""
         
         preprocess_dataset = DataPreprocessor(self.vocab_path)
         self.vocab = preprocess_dataset.load_vocab(self.vocab_path)
@@ -95,18 +100,18 @@ class Prepare_Train():
         preprocess_dataset.check(self.filtered_train_x, self.filtered_train_y, self.filtered_test_x, self.filtered_test_y, before=False)
         self.tokenize = preprocess_dataset.tokenize
 
-        def initialize_the_iterator(self):
+    def initialize_the_iterator(self):
 
-            """Initialize data iterators for training and testing."""
+        """Initialize data iterators for training and testing."""
 
         iterator = BatchIterator(self.filtered_train_x, self.filtered_train_y, self.filtered_test_x, self.filtered_test_y, self.tokenize)
         self.train_generator = iterator.data_generator(self.batch_size, train=True)
         self.test_generator = iterator.data_generator(self.batch_size, train=False)
         self.batch_per_epoch_train, self.batch_per_epoch_test = iterator.calculate_batch_per_epoch(self.batch_size)
 
-        def predict(sentence, model, tokenize):
+    def predict(sentence, model, tokenize):
 
-         """
+        """
         predictict the Emotion of the given sentence using the trained model.
 
         Args:
@@ -146,9 +151,9 @@ class Prepare_Train():
         #label = scores.argmax(dim=1)
         print(f"Models Predictions:{scores}\n   Positive: {scores[0,1]}\n   Negative: {scores[0,0]}")
 
-        def train_the_model(self):
+    def train_the_model(self):
 
-            """Train a Sentiment Analysis Model from scratch (without pretrained word embeddings) using Prepared Dataset so far
+        """Train a Sentiment Analysis Model from scratch (without pretrained word embeddings) using Prepared Dataset so far
 
         Prints:
             Comprehensive Summary of the Model and It's Parameter
