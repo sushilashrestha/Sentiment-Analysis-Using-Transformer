@@ -1,5 +1,6 @@
 venv/
 myvenv/
+.venv/
 __pycache__/
 config.yaml
 test.json
@@ -7,3 +8,5 @@ train.json
 dataset_cleaned.txt
 dataset_vocab.model
 dataset_vocab.vocab
+dataset/
+mymodel 
