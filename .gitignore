@@ -1,4 +1,5 @@
 venv/
+myvenv/
 __pycache__/
 test.json
 train.json
