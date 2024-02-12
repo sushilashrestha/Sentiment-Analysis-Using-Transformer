@@ -1,6 +1,9 @@
 venv/
 myvenv/
 __pycache__/
+dataset/
+mymodel
+tempCodeRunnerFile.py
 config.yaml
 test.json
 train.json
