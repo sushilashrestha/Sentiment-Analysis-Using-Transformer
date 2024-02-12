@@ -1,6 +1,6 @@
-DATASET_DIR: "C:\\Users\\admin\\Documents\\CODES\\translator"
-TRAIN_JSON_PATH: "C:\\Users\\admin\\Documents\\CODES\\translator\\train.json"
-TEST_JSON_PATH: "C:\\Users\\admin\\Documents\\CODES\\translator\\test.json"
+DATASET_DIR: "C:\\Users\\Lenovo\\Desktop\\projectG"
+TRAIN_JSON_PATH: "C:\\Users\\Lenovo\\Desktop\\projectG\\train.json"
+TEST_JSON_PATH: "C:\\Users\\Lenovo\\Desktop\\projectG\\test.json"
 BATCH_SIZE: 4
 OUTPUT_SIZE: 2
 MAX_SEQ_LEN: 512
@@ -11,7 +11,7 @@ EXPANSION_FACTOR: 4
 NUM_BLOCKS: 2
 ACTIVATION: "gelu"
 DROPOUT: 0.1
-MODEL_SAVE_PATH: ""
+MODEL_SAVE_PATH: "C:\\Users\\Lenovo\\Desktop\\projectG\\mymodel"
 LOSS_FN_TYPE: "cel"
 OPTIMIZER_TYPE: "radam"
 NUM_EPOCHS: 4

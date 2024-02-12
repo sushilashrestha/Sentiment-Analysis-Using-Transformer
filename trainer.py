@@ -200,6 +200,8 @@ class Trainer():
         test_acc = []
 
         print("Preparing loss fuction, optimizer and learning rate scheduler...")
+        learning_rate = float(learning_rate)
+        weight_decay = float(weight_decay)
         criteration, optimizer, lr_scheduler = self.prepare_lossfn_optims_lr_scheduler(model, learning_rate, weight_decay, gamma)
         print("Initialised Sucessfully...")
 
@@ -303,8 +305,8 @@ class Trainer():
         if not os.path.isdir(os.path.dirname(self.model_save_path)):
             print("Creating directory for to save the model as it doesn't exist")
             os.mkdir(os.path.dirname(self.model_save_path))
-            self.model_save_path = os.path.dirname(self.model_save_path)+'/imd-sa.bin'
-            print("Saving the Model at: ", os.path.dirname(self.model_save_path)+'/imdb-sa.bin')
+            self.model_save_path = os.path.join(os.path.dirname(self.model_save_path),'/imd-sa.bin')
+            print("Saving the Model at: ", self.model_save_path)
             torch.save(model.state_dict(), self.model_save_path)
 
         else:
