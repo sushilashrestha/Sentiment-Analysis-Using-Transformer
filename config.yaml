@@ -1,6 +1,6 @@
-DATASET_DIR: "C:\\Users\\Lenovo\\Desktop\\projectG"
-TRAIN_JSON_PATH: "C:\\Users\\Lenovo\\Desktop\\projectG\\train.json"
-TEST_JSON_PATH: "C:\\Users\\Lenovo\\Desktop\\projectG\\test.json"
+DATASET_DIR: "."
+TRAIN_JSON_PATH: ".\\train.json"
+TEST_JSON_PATH: ".\\test.json"
 BATCH_SIZE: 4
 OUTPUT_SIZE: 2
 MAX_SEQ_LEN: 512
