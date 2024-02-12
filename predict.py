@@ -11,7 +11,6 @@ from main import Prepare_Train
 # Loading the tokenizer
 tokenizer = WordPiece()
 
-# Defining the predict function
 def predict(sentence, model_path):
     """
     Predict the emotion of the given sentence using the trained model.
@@ -31,19 +30,37 @@ def predict(sentence, model_path):
     review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_lowercase)]
     filtered = list(filter(None, review_without_punctuation))
     cleaned_sentence = ' '.join(filtered)
-    tokenized_sentence = tokenizer.tokenize(cleaned_sentence)
-    padding_mask = [0 if t == 0 else 1 for t in tokenized_sentence]
-    tokenized_input = torch.tensor(tokenized_sentence, dtype=torch.long).unsqueeze(0)
+
+    # Tokenize the cleaned input
+    tokenized_sentence = tokenizer.encode(cleaned_sentence)
+
+    # Convert the tokenized sentence to a list of IDs
+    tokenized_ids = tokenized_sentence.ids
+
+    # Create Padding Mask
+    padding_mask = [0 if t == 0 else 1 for t in tokenized_ids]
+
+    # Convert the tokenized sentence to a tensor and add batch dimension
+    tokenized_input = torch.tensor(tokenized_ids, dtype=torch.long).unsqueeze(0)
+
+    # Convert the Padding mask into a torch tensor data type and adjust the size of the tensor to match the attention size
     padding_mask = torch.tensor(padding_mask, dtype=torch.bool).unsqueeze(0).unsqueeze(0).unsqueeze(0)
 
     # Load the trained model
-    model = Encoder()
-    state_dict = torch.load(model_path, map_location=torch.device('cuda:0'))
+    model_class = Encoder
+    model = model_class(vocab_size=100, output_size=2, max_seq_len=512)
+
+    # Load the state dictionary of the model
+    state_dict = torch.load(model_path)
 
     # Update the embedding.embed.weight parameter to match the size in the state dictionary
     state_dict['embedding.embed.weight'] = state_dict['embedding.embed.weight'].unsqueeze(2).expand(-1, -1, 512)
 
+    # Load the state dictionary into the model
     model.load_state_dict(state_dict)
+
+    # Set the model to evaluation mode
+    model.eval()
 
     # Make a prediction
     with torch.no_grad():
@@ -51,7 +68,6 @@ def predict(sentence, model_path):
         scores = model.softmax(pred)
 
     print(f"Model's Predictions: {scores}\n   Positive: {scores[0,1]}\n   Negative: {scores[0,0]}")
-
 # Main function
 def main():
     # Load arguments from a YAML config file
