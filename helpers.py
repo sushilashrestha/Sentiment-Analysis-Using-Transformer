@@ -25,7 +25,7 @@ def count_parameters(model):
 
 
 # plot the training loss and training, testing accuracy
-def plot_metrics(num_epochs, batch_per_epoch_train, batch_per_epoch_test,train_loss, train_acc, test_acc):
+#def plot_metrics(num_epochs, batch_per_epoch_train,batch_per_epoch_test,train_loss, train_acc, test_acc):
 
 #     # X axis Epoch
 #     train_epochs = list(range(1, (batch_per_epoch_train * num_epochs) + 1))
