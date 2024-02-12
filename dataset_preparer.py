@@ -303,7 +303,7 @@ class DatasetPreparer():
         return file_path
 
 
-    def build_vocab(self, vocab_file_prefix='dataset_vocab', vocab_size=129, model_type='bpe'):
+    def build_vocab(self, vocab_file_prefix='dataset_vocab', vocab_size=78, model_type='bpe'):
 
         """
         Builds a vocabulary using SentencePiece for encoding the reviews into numerical values.
@@ -316,7 +316,8 @@ class DatasetPreparer():
         Returns:
             str: Path to the built vocabulary model file.
         """
-
+        if type(self.dataset_folder) is tuple:
+            self.dataset_folder = str(self.dataset_folder[0])
         dataset_parent_dir = os.path.dirname(self.dataset_folder)
 
         print("\nChecking whether the vocabulary file already exist...")
