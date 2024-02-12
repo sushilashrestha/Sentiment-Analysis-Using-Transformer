@@ -303,7 +303,7 @@ class DatasetPreparer():
         return file_path
 
 
-    def build_vocab(self, vocab_file_prefix='dataset_vocab', vocab_size=78, model_type='bpe'):
+    def build_vocab(self, vocab_file_prefix='dataset_vocab', vocab_size=200, model_type='bpe'):
 
         """
         Builds a vocabulary using SentencePiece for encoding the reviews into numerical values.

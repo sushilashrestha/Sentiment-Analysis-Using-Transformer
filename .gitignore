@@ -1,5 +1,6 @@
 venv/
 myvenv/
+.venv/
 __pycache__/
 dataset/
 mymodel
@@ -10,3 +11,5 @@ train.json
 dataset_cleaned.txt
 dataset_vocab.model
 dataset_vocab.vocab
+dataset/
+mymodel 

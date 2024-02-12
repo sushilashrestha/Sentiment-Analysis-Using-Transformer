@@ -11,7 +11,7 @@ EXPANSION_FACTOR: 4
 NUM_BLOCKS: 2
 ACTIVATION: "gelu"
 DROPOUT: 0.1
-MODEL_SAVE_PATH: "C:\\Users\\Lenovo\\Desktop\\projectG\\mymodel"
+MODEL_SAVE_PATH: "C:\\Users\\dell\\my_projects\\projectG\\mymodel"
 LOSS_FN_TYPE: "cel"
 OPTIMIZER_TYPE: "radam"
 NUM_EPOCHS: 4
