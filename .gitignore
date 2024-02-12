@@ -1,6 +1,7 @@
 venv/
 myvenv/
 __pycache__/
+config.yaml
 test.json
 train.json
 dataset_cleaned.txt
