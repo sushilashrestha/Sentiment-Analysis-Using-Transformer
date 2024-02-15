@@ -110,45 +110,45 @@ class Prepare_Train():
         self.test_generator = iterator.data_generator(self.batch_size, train=False)
         self.batch_per_epoch_train, self.batch_per_epoch_test = iterator.calculate_batch_per_epoch(self.batch_size)
 
-    # def predict(self, sentence, model):
-    #     """
-    # Predict the emotion of the given sentence using the trained model.
+    def predict(self, sentence, model, tokenize):
+        """
+    Predict the emotion of the given sentence using the trained model.
 
-    # Args:
-    #     sentence (str): Input sentence to predict sentiment.
-    #     model: Trained sentiment analysis model.
-    #     tokenize: Tokenization function.
+    Args:
+        sentence (str): Input sentence to predict sentiment.
+        model: Trained sentiment analysis model.
+        tokenize: Tokenization function.
 
-    # Prints:
-    #     Model's Prediction of given sentence being positive and negative
-    # """
+    Prints:
+        Model's Prediction of given sentence being positive and negative
+    """
 
-    #     preprocess_dataset = DataPreprocessor(self.vocab_path)
-    #     # Remove HTML tag from review.
-    #     clean = re.compile('<.*?>')
-    #     review_without_tag = re.sub(clean, '', sentence)
-    #     # Make Entire Sentence lowercase.
-    #     review_lowercase = review_without_tag.lower()
-    #     # Tokenize and remove punctuation from words.
-    #     review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_lowercase)]
-    #     # Filter out empty strings.
-    #     filtered = list(filter(None, review_without_punctuation))
-    #     # Combine words into a sentence.
-    #     cleaned_sentence = ' '.join(filtered)
-    #     # Tokenize the cleaned input.
-    #     tokenized_sentence = preprocess_dataset.tokenize(cleaned_sentence)
-    #     # Create padding mask.
-    #     padding_mask = [0 if t == 0 else 1 for t in tokenized_sentence]
-    #     # Convert the tokenized sentence to a tensor and add batch dimension.
-    #     tokenized_input = torch.tensor(tokenized_sentence, dtype=torch.long).unsqueeze(0)
-    #     # Convert the padding mask into a torch tensor data type and adjust the size of the tensor to match the attention size.
-    #     padding_mask = torch.tensor(padding_mask, dtype=torch.bool).unsqueeze(0).unsqueeze(0).unsqueeze(0)
+        preprocess_dataset = DataPreprocessor(self.vocab_path)
+        # Remove HTML tag from review.
+        clean = re.compile('<.*?>')
+        review_without_tag = re.sub(clean, '', sentence)
+        # Make Entire Sentence lowercase.
+        review_lowercase = review_without_tag.lower()
+        # Tokenize and remove punctuation from words.
+        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_lowercase)]
+        # Filter out empty strings.
+        filtered = list(filter(None, review_without_punctuation))
+        # Combine words into a sentence.
+        cleaned_sentence = ' '.join(filtered)
+        # Tokenize the cleaned input.
+        tokenized_sentence = preprocess_dataset.tokenize(cleaned_sentence)
+        # Create padding mask.
+        padding_mask = [0 if t == 0 else 1 for t in tokenized_sentence]
+        # Convert the tokenized sentence to a tensor and add batch dimension.
+        tokenized_input = torch.tensor(tokenized_sentence, dtype=torch.long).unsqueeze(0)
+        # Convert the padding mask into a torch tensor data type and adjust the size of the tensor to match the attention size.
+        padding_mask = torch.tensor(padding_mask, dtype=torch.bool).unsqueeze(0).unsqueeze(0).unsqueeze(0)
     
-    #     with torch.no_grad():
-    #         pred = model.forward(tokenized_input.to("cuda:0"), padding_mask.to("cuda:0"))
-    #         scores = model.softmax(pred)
+        with torch.no_grad():
+            pred = model.forward(tokenized_input.to("cuda:0"), padding_mask.to("cuda:0"))
+            scores = model.softmax(pred)
 
-    #     print(f"Model's Predictions: {scores}\n   Positive: {scores[0,1]}\n   Negative: {scores[0,0]}")
+        print(f"Model's Predictions: {scores}\n   Positive: {scores[0,1]}\n   Negative: {scores[0,0]}")
 
     def train_the_model(self):
 
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     prepare_and_train.initialize_the_iterator()
     model_path = prepare_and_train.train_the_model()
 
-    # Test the trained model
+    #Test the trained model
 # test = input("Do You Want to Test the Model Now (y/n): ")
 # if test.lower() == "y":
 #     print("Getting Ready for Inference... Enter `q` to exit.")
@@ -253,3 +253,16 @@ if __name__ == "__main__":
 #         if sentence != "q":
 #             prepare_and_train.predict(sentence, model)
 #         break
+    
+    
+
+    test = input("Do You Want to Test the Model Now (y/n): ")
+    if test.lower() == "y":
+        print("Getting Ready for Inference... Enter `q` to exit.")
+        model = torch.load(model_path)
+        print(model)
+        while True:
+            sentence = input("Enter your Sentence: ")
+            if sentence != "q":
+                prepare_and_train.predict(sentence, model, prepare_and_train.tokenize)
+            break

@@ -311,7 +311,7 @@ class Trainer():
 
         else:
             print("Saving the Model at: ", self.model_save_path)
-            torch.save(model.state_dict(), self.model_save_path)
+            torch.save(model, self.model_save_path)
 
 
         return train_loss, train_acc, test_acc, self.model_save_path
