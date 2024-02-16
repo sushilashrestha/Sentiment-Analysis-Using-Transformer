@@ -65,38 +65,68 @@ def count_parameters(model):
 #     plt.show()
 
 #in single frame
-def plot_metrics(num_epochs, batch_per_epoch_train, batch_per_epoch_test, train_loss, train_acc, test_acc):
-    # Calculate epochs
-    train_epochs = list(range(1, (batch_per_epoch_train * num_epochs) + 1))
-    test_epochs = list(range(1, (batch_per_epoch_test * num_epochs) + 1))
+# def plot_metrics(num_epochs, batch_per_epoch_train, batch_per_epoch_test, train_loss, train_acc, test_acc):
+#     # Calculate epochs
+#     train_epochs = list(range(1, (batch_per_epoch_train * num_epochs) + 1))
+#     test_epochs = list(range(1, (batch_per_epoch_test * num_epochs) + 1))
     
-    # Create subplots
-    fig, axes = plt.subplots(3, 1, figsize=(12,12))
+#     # Create subplots
+#     fig, axes = plt.subplots(3, 1, figsize=(12,12))
     
-    # Plot Train Loss
-    axes[0].plot(train_epochs, train_loss, label='Train Loss')
-    axes[0].set_xlabel('Epoch')
-    axes[0].set_ylabel('Loss')
-    axes[0].set_title('Training Loss')
-    axes[0].legend()
+#     # Plot Train Loss
+#     axes[0].plot(num_epochs, train_loss, label='Train Loss')
+#     axes[0].set_xlabel('Epoch')
+#     axes[0].set_ylabel('Loss')
+#     axes[0].set_title('Training Loss')
+#     axes[0].legend()
     
-    # Plot Train Accuracy
-    axes[1].plot(train_epochs, train_acc, label='Train Accuracy')
-    axes[1].set_xlabel('Epoch')
-    axes[1].set_ylabel('Accuracy')
-    axes[1].set_title('Training Accuracy')
-    axes[1].legend()
+#     # Plot Train Accuracy
+#     axes[1].plot(num_epochs, train_acc, label='Train Accuracy')
+#     axes[1].set_xlabel('Epoch')
+#     axes[1].set_ylabel('Accuracy')
+#     axes[1].set_title('Training Accuracy')
+#     axes[1].legend()
     
-    # Plot Test Accuracy
-    axes[2].plot(test_epochs, test_acc, label='Test Accuracy')
-    axes[2].set_xlabel('Epoch')
-    axes[2].set_ylabel('Accuracy')
-    axes[2].set_title('Testing Accuracy')
-    axes[2].legend()
+#     # Plot Test Accuracy
+#     axes[1].plot(num_epochs, test_acc, label='Test Accuracy')
+#     axes[1].set_xlabel('Epoch')
+#     axes[1].set_ylabel('Accuracy')
+#     axes[1].set_title('Testing Accuracy')
+#     axes[1].legend()
     
-    # Adjust layout
-    plt.subplots_adjust(hspace=0.75)
-    #plt.tight_layout()
+#     # Adjust layout
+#     plt.subplots_adjust(hspace=0.75)
+#     #plt.tight_layout()
     
-    # Show the plots
+#     # Show the plots
+#     plt.show()
+
+
+import matplotlib.pyplot as plt
+
+def plot_metrics(train_loss, train_acc, test_loss, test_acc):
+    epochs = list(range(1, len(train_acc) + 1))
+    
+
+    plt.figure(figsize=(12, 5))
+
+    # Plot Training and Testing Accuracy
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, train_acc, 'b', label='Training acc')
+    plt.plot(epochs, test_acc, 'r', label='Testing acc')
+    plt.title('Training and Testing Accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.legend()
+
+    # Plot Training and Testing Loss
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, train_loss, 'b', label='Training loss')
+    plt.plot(epochs, test_loss, 'r', label='Testing loss')
+    plt.title('Training and Testing Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+
     plt.show()
+

@@ -189,8 +189,10 @@ class Prepare_Train():
         self.prepared_model = trainer.prepare_model()
         model_summary(self.prepared_model, self.train_generator)
         count_parameters(self.prepared_model)
-        self.train_loss, self.train_acc, self.test_acc, model_path = trainer.train(self.prepared_model, num_epochs=self.num_epochs, learning_rate=self.learning_rate, weight_decay=self.weight_decay, gamma=self.gamma)
-        plot_metrics(self.num_epochs, self.batch_per_epoch_train, self.batch_per_epoch_test, self.train_loss, self.train_acc, self.test_acc)
+        self.train_loss, self.train_acc, self.test_loss, self.test_acc, model_path = trainer.train(self.prepared_model, num_epochs=self.num_epochs, learning_rate=self.learning_rate, weight_decay=self.weight_decay, gamma=self.gamma)
+        #plot_metrics(self.num_epochs, self.batch_per_epoch_train, self.batch_per_epoch_test, self.train_loss, self.train_acc, self.test_acc)
+        plot_metrics(self.train_loss, self.train_acc,self.test_loss, self.test_acc)
+        
         return model_path
 
 
