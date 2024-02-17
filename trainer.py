@@ -321,7 +321,7 @@ import torch
 import torch.nn as nn
 from activation import Softmax
 from encoder import Encoder
-from helpers import plot_confusion_matrix
+from helpers import plot_confusion_matrix, calculate_metrics
 from sklearn.metrics import confusion_matrix
 
 class Trainer():
@@ -632,7 +632,19 @@ class Trainer():
         # Compute the confusion matrix
         cm = confusion_matrix(true_labels, predicted_labels)
         plot_confusion_matrix(cm)
-        
+        # Extracting TP, TN, FP, FN from confusion matrix
+        TP = cm[1, 1]
+        TN = cm[0, 0]
+        FP = cm[0, 1]
+        FN = cm[1, 0]
+
+        print("True Positives:", TP)
+        print("True Negatives:", TN)
+        print("False Positives:", FP)
+        print("False Negatives:", FN)
+
+        calculate_metrics(TP,TN, FP, FN)
+
         return train_loss, train_acc, test_loss, test_acc, self.model_save_path
 
 

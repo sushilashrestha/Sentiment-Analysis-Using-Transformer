@@ -1,6 +1,7 @@
 from torchinfo import summary
 from prettytable import PrettyTable
 from matplotlib import pyplot as plt
+import seaborn as sns
 
 
 # Print a Comprehensive Summary of the Model, Modules, Submodules, Parameter Counts
@@ -133,8 +134,7 @@ def plot_metrics(train_loss, train_acc, test_loss, test_acc):
     plt.show()
 
 
-import matplotlib.pyplot as plt
-import seaborn as sns
+
 
 def plot_confusion_matrix(cm):
     plt.figure(figsize=(8, 6))
@@ -144,3 +144,20 @@ def plot_confusion_matrix(cm):
     plt.title('Confusion Matrix')
     plt.show()
 
+def calculate_metrics(TP,TN,FP,FN):
+    # Calculate accuracy
+    accuracy = (TP + TN) / (TP + TN + FP + FN)
+    print("Accuracy:", accuracy)
+
+    # Calculate precision
+    precision = TP / (TP + FP)
+    print("Precision:", precision)
+
+    # Calculate recall
+    recall = TP / (TP + FN)
+    print("Recall:", recall)
+
+    # Calculate F1 score
+    f1 = (2 * precision * recall) / (precision + recall)
+    print("F1 Score:", f1)
+    return 0
