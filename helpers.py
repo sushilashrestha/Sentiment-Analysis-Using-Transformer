@@ -104,17 +104,19 @@ def count_parameters(model):
 
 import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+
 def plot_metrics(train_loss, train_acc, test_loss, test_acc):
     epochs = list(range(1, len(train_acc) + 1))
-    
+   
 
     plt.figure(figsize=(12, 5))
 
     # Plot Training and Testing Accuracy
     plt.subplot(1, 2, 1)
     plt.plot(epochs, train_acc, 'b', label='Training acc')
-    plt.plot(epochs, test_acc, 'r', label='Testing acc')
-    plt.title('Training and Testing Accuracy')
+    plt.plot(epochs, test_acc, 'r', label='Validation acc')
+    plt.title('Training and Validation Accuracy')
     plt.xlabel('Epochs')
     plt.ylabel('Accuracy')
     plt.legend()
@@ -122,11 +124,23 @@ def plot_metrics(train_loss, train_acc, test_loss, test_acc):
     # Plot Training and Testing Loss
     plt.subplot(1, 2, 2)
     plt.plot(epochs, train_loss, 'b', label='Training loss')
-    plt.plot(epochs, test_loss, 'r', label='Testing loss')
-    plt.title('Training and Testing Loss')
+    plt.plot(epochs, test_loss, 'r', label='Validation loss')
+    plt.title('Training and Validation Loss')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
 
+    plt.show()
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def plot_confusion_matrix(cm):
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, cmap='Blues', fmt='d', cbar=False)
+    plt.xlabel('Predicted labels')
+    plt.ylabel('True labels')
+    plt.title('Confusion Matrix')
     plt.show()
 

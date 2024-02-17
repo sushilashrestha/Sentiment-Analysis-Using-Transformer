@@ -127,10 +127,9 @@ class Prepare_Train():
         # Remove HTML tag from review.
         clean = re.compile('<.*?>')
         review_without_tag = re.sub(clean, '', sentence)
-        # Make Entire Sentence lowercase.
-        review_lowercase = review_without_tag.lower()
+       
         # Tokenize and remove punctuation from words.
-        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_lowercase)]
+        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_without_tag)]
         # Filter out empty strings.
         filtered = list(filter(None, review_without_punctuation))
         # Combine words into a sentence.
