@@ -8,7 +8,7 @@ from dataset_preprocessor import DataPreprocessor
 from batch_iterator import BatchIterator
 from trainer import Trainer
 import nltk 
-from nltk.tokenize import word_tokenize
+#from nltk.tokenize import word_tokenize
 import re
 import string
 import nltk
@@ -87,6 +87,7 @@ class Prepare_Train():
         dataset_prep = DatasetPreparer(self.dataset_folder, tokenizer = tokenizer)
         self.train_x, self.train_y, self.test_x, self.test_y = dataset_prep.prepare_dataset(self.train_json_path, self.test_json_path, verbose=True)
         self.vocab_path =  dataset_prep.build_vocab()
+        print(self.vocab_path)
 
     def preprocess_the_dataset(self):
 
@@ -123,23 +124,28 @@ class Prepare_Train():
         Model's Prediction of given sentence being positive and negative
     """
 
-        preprocess_dataset = DataPreprocessor(self.vocab_path)
+        # preprocess_dataset = DataPreprocessor(self.vocab_path)
         # Remove HTML tag from review.
         clean = re.compile('<.*?>')
         review_without_tag = re.sub(clean, '', sentence)
        
         # Tokenize and remove punctuation from words.
-        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in word_tokenize(review_without_tag)]
+        review_tokens = tokenizer.encode(review_without_tag).tokens
+        # Remove punctuation from the tokens.
+        review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in review_tokens]
         # Filter out empty strings.
         filtered = list(filter(None, review_without_punctuation))
         # Combine words into a sentence.
         cleaned_sentence = ' '.join(filtered)
         # Tokenize the cleaned input.
-        tokenized_sentence = preprocess_dataset.tokenize(cleaned_sentence)
+        # Tokenize the Cleaned input
+        tokenized_sentence = tokenize(cleaned_sentence)
+        print(tokenized_sentence)
         # Create padding mask.
         padding_mask = [0 if t == 0 else 1 for t in tokenized_sentence]
         # Convert the tokenized sentence to a tensor and add batch dimension.
         tokenized_input = torch.tensor(tokenized_sentence, dtype=torch.long).unsqueeze(0)
+        print(tokenized_input)
         # Convert the padding mask into a torch tensor data type and adjust the size of the tensor to match the attention size.
         padding_mask = torch.tensor(padding_mask, dtype=torch.bool).unsqueeze(0).unsqueeze(0).unsqueeze(0)
     
@@ -148,6 +154,7 @@ class Prepare_Train():
             scores = model.softmax(pred)
 
         print(f"Model's Predictions: {scores}\n   Positive: {scores[0,1]}\n   Negative: {scores[0,0]}")
+        
 
     def train_the_model(self):
 

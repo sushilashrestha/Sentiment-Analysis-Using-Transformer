@@ -2,6 +2,7 @@ from torchinfo import summary
 from prettytable import PrettyTable
 from matplotlib import pyplot as plt
 import seaborn as sns
+from sklearn.metrics import roc_curve,auc
 
 
 # Print a Comprehensive Summary of the Model, Modules, Submodules, Parameter Counts
@@ -103,9 +104,7 @@ def count_parameters(model):
 #     plt.show()
 
 
-import matplotlib.pyplot as plt
 
-import matplotlib.pyplot as plt
 
 def plot_metrics(train_loss, train_acc, test_loss, test_acc):
     epochs = list(range(1, len(train_acc) + 1))
@@ -160,4 +159,29 @@ def calculate_metrics(TP,TN,FP,FN):
     # Calculate F1 score
     f1 = (2 * precision * recall) / (precision + recall)
     print("F1 Score:", f1)
-    return 0
+    
+
+def plot_roc_curve(y_true, y_score):
+    """
+    Function to plot the ROC curve.
+    
+    Parameters:
+        y_true: array-like, true binary labels.
+        y_score: array-like, predicted probabilities or decision function scores.
+    
+    Returns:
+        None (plots ROC curve)
+    """
+    fpr, tpr, thresholds = roc_curve(y_true, y_score)
+    roc_auc = auc(fpr, tpr)
+    
+    plt.figure(figsize=(8, 6))
+    plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (area = {roc_auc:.2f})')
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend(loc='lower right')
+    plt.show()

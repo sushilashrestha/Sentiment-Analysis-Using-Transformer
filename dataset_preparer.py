@@ -1,7 +1,7 @@
 # importing necessary modules
 import string
 import re
-from nltk.tokenize import word_tokenize
+# from nltk.tokenize import word_tokenize
 import os
 import time
 import json
@@ -61,9 +61,7 @@ class DatasetPreparer():
         clean = re.compile('<.*?>')
         review_without_tag = re.sub(clean, '', review)
         # Convert the review to lowercase.
-        review_lowercase = review_without_tag.lower()
-        # Tokenize the review using WordPiece tokenizer.
-        review_tokens = self.tokenizer.encode(review_lowercase).tokens
+        review_tokens = self.tokenizer.encode(review_without_tag).tokens
         # Remove punctuation from the tokens.
         review_without_punctuation = [''.join(char for char in word if (char not in string.punctuation)) for word in review_tokens]
         # Filter of Empty Strings

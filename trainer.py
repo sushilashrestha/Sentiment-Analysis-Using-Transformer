@@ -321,7 +321,7 @@ import torch
 import torch.nn as nn
 from activation import Softmax
 from encoder import Encoder
-from helpers import plot_confusion_matrix, calculate_metrics
+from helpers import plot_confusion_matrix, calculate_metrics,plot_roc_curve
 from sklearn.metrics import confusion_matrix
 
 class Trainer():
@@ -644,6 +644,8 @@ class Trainer():
         print("False Negatives:", FN)
 
         calculate_metrics(TP,TN, FP, FN)
+        plot_roc_curve(true_labels,predicted_labels)
+        
 
         return train_loss, train_acc, test_loss, test_acc, self.model_save_path
 
