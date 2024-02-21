@@ -7,3 +7,6 @@ translator = Translator()
 def translate(text):
     nepaliText = translator.translate(text,src= 'en' ,dest="ne")
     return nepaliText.text
+
+input = 'kasto ramro din'
+print(converter.convert(input))

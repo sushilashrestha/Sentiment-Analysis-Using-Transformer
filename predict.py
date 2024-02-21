@@ -53,7 +53,6 @@ def predict(input_text, model_path):
         pred = model.forward(tokenized_input.to("cuda:0"), padding_mask.to("cuda:0"))
         scores = model.softmax(pred)
 
-        print(f"Model's Predictions: {scores}\n   Positive: {scores[0,1]}\n   Negative: {scores[0,0]}")
 
     # Process the output as needed
     return scores
