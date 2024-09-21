@@ -1,6 +1,4 @@
 venv/
-myvenv/
-.venv/
 __pycache__/
 dataset/
 mymodel
@@ -13,4 +11,4 @@ dataset_vocab.model
 dataset_vocab.vocab
 dataset/
 mymodel 
-dataset.zip/
+dataset.zip

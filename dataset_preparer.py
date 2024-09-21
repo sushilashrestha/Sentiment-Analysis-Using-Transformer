@@ -1,7 +1,6 @@
-# importing necessary modules
 import string
 import re
-# from nltk.tokenize import word_tokenize
+
 import os
 import time
 import json

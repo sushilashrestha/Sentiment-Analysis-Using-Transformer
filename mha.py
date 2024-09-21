@@ -1,4 +1,3 @@
-# Importing Necessary Modules
 import torch
 import torch.nn as nn
 from activation import Softmax

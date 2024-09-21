@@ -1,14 +1,13 @@
-# Importing all the required modules
 import re
 import string
 import torch
 import yaml
 import nltk
+
 from nltk.tokenize import word_tokenize
 from nepalitokenizers import WordPiece
 from encoder import Encoder
 from main import Prepare_Train
-# Loading the 
 from dataset_preprocessor import DataPreprocessor
 
 tokenizer = WordPiece()

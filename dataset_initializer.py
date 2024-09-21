@@ -1,4 +1,3 @@
-# Importing all the Necessary libraries
 import os
 import time
 import tarfile

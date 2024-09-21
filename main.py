@@ -1,19 +1,21 @@
-# Importing All the Modules that we created
-import yaml # We Are Going to use yaml to parse the Arguments. 
-from helpers import model_summary, count_parameters, plot_metrics
+import yaml
 import torch
-from dataset_initializer import DataInitializer
-from dataset_preparer import DatasetPreparer
-from dataset_preprocessor import DataPreprocessor
-from batch_iterator import BatchIterator
-from trainer import Trainer
 import nltk 
 import re
 import string
 import nltk
 nltk.download('punkt')
+
 from nepalitokenizers import WordPiece
-from encoder import Encoder
+from encoder import Encoder 
+
+from helpers import model_summary, count_parameters, plot_metrics
+from dataset_initializer import DataInitializer
+from dataset_preparer import DatasetPreparer
+from dataset_preprocessor import DataPreprocessor
+from batch_iterator import BatchIterator
+from trainer import Trainer
+
 
 tokenizer = WordPiece()
 
