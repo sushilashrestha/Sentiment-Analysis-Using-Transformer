@@ -1,5 +1,5 @@
 # Importing All the Modules that we created
-import yaml # We Are Going to use yaml to parse the Arguments. Forget the Good old Arg Parser >_<
+import yaml # We Are Going to use yaml to parse the Arguments. 
 from helpers import model_summary, count_parameters, plot_metrics
 import torch
 from dataset_initializer import DataInitializer
@@ -8,7 +8,6 @@ from dataset_preprocessor import DataPreprocessor
 from batch_iterator import BatchIterator
 from trainer import Trainer
 import nltk 
-#from nltk.tokenize import word_tokenize
 import re
 import string
 import nltk
