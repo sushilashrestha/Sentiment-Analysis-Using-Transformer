@@ -11,7 +11,6 @@ The model is designed to understand and classify sentiments in Nepali language r
 - Sentiment analysis of Nepali text for beauty product reviews
 - Transformer-based architecture for advanced natural language processing
 - Custom data preprocessing pipeline for Nepali language
-- Tailored for the nuances of beauty product terminology and expressions
 
 ## Project Structure
 
@@ -39,14 +38,7 @@ The model is designed to understand and classify sentiments in Nepali language r
    cd nepali-beauty-sentiment-analysis
    ```
 
-2. Create and activate a virtual environment:
-
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-   ```
-
-3. Install the required packages:
+2. Install the required packages:
    ```
    pip install -r requirements.txt
    ```
