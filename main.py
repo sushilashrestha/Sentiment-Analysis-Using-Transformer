@@ -242,28 +242,6 @@ if __name__ == "__main__":
     prepare_and_train.initialize_the_iterator()
     model_path = prepare_and_train.train_the_model()
 
-    #Test the trained model
-# test = input("Do You Want to Test the Model Now (y/n): ")
-# if test.lower() == "y":
-#     print("Getting Ready for Inference... Enter `q` to exit.")
-#     model_path = ".\\mymodel"
-#     model_class = Encoder
-#     model = model_class(vocab_size=100, output_size=2, max_seq_len=512)
-#     state_dict = torch.load(model_path)
-
-#     # Update the embedding.embed.weight parameter to match the size in the state dictionary
-#     state_dict['embedding.embed.weight'] = state_dict['embedding.embed.weight'].unsqueeze(2).expand(-1, -1, 512)
-
-#     model.load_state_dict(state_dict)
-#     # model = prepare_and_train.prepared_model.load_state_dict(torch.load(model_path))
-#     while True:
-#         sentence = input("Enter your Sentence: ")
-#         if sentence != "q":
-#             prepare_and_train.predict(sentence, model)
-#         break
-    
-    
-
     test = input("Do You Want to Test the Model Now (y/n): ")
     if test.lower() == "y":
         print("Getting Ready for Inference... Enter `q` to exit.")

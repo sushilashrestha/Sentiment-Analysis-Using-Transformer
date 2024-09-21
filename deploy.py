@@ -9,13 +9,6 @@ from nepali_unicode_converter.convert import Converter
 
 
 tokenizer = WordPiece()
-
-# Function to load the PyTorch model
-# def load_model(model_path):
-#     model = Encoder(vocab_size=100, output_size=2, max_seq_len=512)  # Initialize your model
-#     model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))  # Load model weights
-#     model.eval()  # Set model to evaluation mode
-#     return model
 # Function to load the PyTorch model
 def load_model(model_path):
     model = Encoder(vocab_size=100, output_size=2, max_seq_len=512)  # Initialize your model
